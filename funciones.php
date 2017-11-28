@@ -1,61 +1,58 @@
 <?php
+require_once 'db.php';
 
-// para poder trabajar con los valores de $_POST, le doy los valores a una variable local para poder utilizarla en todo el programa
-$x = $_POST;
-
-
-// para evitar los index no definidos
-if (empty($_POST)) {
-  $x['tara_tractor'] = "0";
-  $x['tara_cisterna'] = "0";
-  $x['tipo_tractor'] ="";
-  $x['tipo_cisterna']="";
-  $x['carga']="0";
-  $x['tara_equipo']="0";
+// obtengo la data del tractor
+for ($i=0; $i < 1 ; $i++) {
+foreach ($tractorData as $key => $value) {
+  $truckId = $value["id"];
+  $truckName = $value["name"];
+  $truckTara = $value["tara"];
+  $truckType = $value["type"];
+}
+}
+// obtengo la data de la cisterna
+for ($i=0; $i < 1 ; $i++) {
+foreach ($cisternaData as $key => $value) {
+  $tankId = $value["idtank"];
+  $tankName = $value["name"];
+  $tankTara = $value["tara_tank"];
+  $tankType = $value["type_tank"];
+}
 }
 
-function pesoBruto($x){
-  $bruto = $x['tara_tractor']+$x['tara_cisterna']+$x['carga'];
-  return $bruto;
+
+function bruto($truckTara,$tankTara,$carga){
+  $pesoBruto = $truckTara + $tankTara + $carga;
+  return $pesoBruto;
 }
 
-$total = pesoBruto($x);
-echo "peso bruto es= ";
-var_dump(pesoBruto($x));
-$total;
+$bruto = bruto($truckTara,$tankTara,$carga);
 
+// con la siguiente función averiguo cual es el peso máximo para
+// la configuración del equipo
+function pesoMaximo($truckType,$tankType){
 
-function maximos($x){
+  if ($truckType=="balancin"&&$tankType=="tres_ejes") {
+    $maximo = 45000;
 
-  $d_tractor = $x['tipo_tractor'];
-  $d_cisterna = $x['tipo_cisterna'];
-
-  if ($d_tractor =="balancin"&&$d_cisterna=="tres ejes") {
-    $pesoMaximo = 45000;
   }
-  elseif ($d_tractor=="simple"&&$d_cisterna=="dos ejes") {
-    $pesoMaximo = 42000;
+  elseif ($truckType=="balancin"&&$tankType=="dos_ejes") {
+    $maximo = 45000;
   }
   else {
-    $pesoMaximo = 0;
+    $maximo = 0;
   }
-  return $pesoMaximo;
-  }
+  return $maximo;
+}
+$pesoMaximo = pesoMaximo($truckType,$tankType);
 
-  $maximo = maximos($x);
+echo $pesoMaximo;
 
-echo "ver";
-var_dump($maximo);
-
-
-
-    if ($total>$maximo){
-        header("Location:exit.php");exit;
-       }
- else
- {$valor = "ok";}
-
-var_dump($valor);
-
-
- ?>
+if ($bruto>$pesoMaximo) {
+  header("Location:exit.php");exit;
+}
+else {
+  $carga = "ok";
+}
+echo $carga;
+?>

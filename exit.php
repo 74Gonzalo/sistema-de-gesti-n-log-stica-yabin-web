@@ -1,3 +1,1 @@
-<?php
-echo "la configuración excede los pesos máximos"
-; ?>
+La operación no puede realizarse

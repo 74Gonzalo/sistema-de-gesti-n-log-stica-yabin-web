@@ -1,0 +1,12 @@
+*{
+  box-sizing: border-box;
+}
+
+a{
+  text-decoration: none;
+}
+
+.home{
+color: white;
+background-color: blue;
+}
