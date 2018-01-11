@@ -1,3 +1,7 @@
+<?php
+require_once 'db_validation.php';
+require_once 'auth.php';
+ ?>
 <!DOCTYPE html>
 <html>
   <head>
